@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <!-- 引入react的三个依赖 -->
+  <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+  <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+  <!-- 解析jsx -->
+  <script type="text/babel">
+    let message = 'Hello World'
+    function render(){
+      ReactDOM.render(
+        <div>
+          <h2>{message}</h2>
+          <button onClick = {btnClick}>点击切换</button>
+        </div>,document.getElementById("app"))
+    }
+    function btnClick(){
+      message = 'React'
+      // 不是自动的响应式需要再次调用render函数
+      render()
+    }
+    render()
+  </script>
+</body>
+</html>
