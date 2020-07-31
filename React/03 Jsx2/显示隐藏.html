@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <!-- 引入react的三个依赖 -->
+  <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+  <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+  <!-- 解析jsx -->
+  <script type="text/babel">
+    class App extends React.Component{
+      constructor(){
+        super()
+        this.state = {
+          login: false
+        }
+      }
+
+      render(){
+        const {login} = this.state
+        let message = null
+
+        if(login) {
+          message = <h2>欢迎回来</h2>
+        }else {
+          message = <h2>登录</h2>
+        }
+        // 解决class中默认使用严格模式，方法中this指向为undefined的问题：
+        //   ​	jsx在调用方法时后面使用bind(this)绑定this(也可以将bind提升到constrotor中)
+        //   ​	定义函数时，使用箭头函数
+        //   ​	绑定时，直接传入箭头函数，函数体调用 this.事件
+        return (
+          <div>
+            {message}
+            <button onClick = {()=>{ this.btnClick() }}>{login?"退出":"登录"}</button>
+            <div>{login&&"有东西"}</div>
+            <div style = {{display: login?"block":"none"}}>v-show</div>
+          </div>
+        )
+      }
+
+      btnClick() {
+        this.setState({
+          login: !this.state.login
+        })
+      }
+    }
+    // 挂载
+    ReactDOM.render(<App/>,document.getElementById("app"))
+  </script>
+</body>
+</html>

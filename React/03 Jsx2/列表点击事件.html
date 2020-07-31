@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <!-- 引入react的三个依赖 -->
+  <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+  <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+  <!-- 解析jsx -->
+  <script type="text/babel">
+    class App extends React.Component{
+      constructor(){
+        super()
+        this.state = {
+          count: 1,
+          movies: ['大话西游','审死官','国产凌凌漆','功夫']
+        }
+      }
+      // 必须有
+      render(){
+        // jsx写在（）中可换行
+        return (
+          <div>
+            <h2>电影推荐</h2>
+            {/* 使用箭头函数解决this问题 参数传递 */}
+            <ul onClick = { (e)=> { this.ulClick(e) } }>
+              {/*直接在{}里转换数组就行了*/}
+              {this.state.movies.map((item)=>{
+                return <li>{item}</li>
+              })}
+            </ul>
+          </div>
+        )
+      }
+      ulClick(e){
+        console.log(e.target.innerText);
+      }
+    }
+    // 挂载
+    ReactDOM.render(<App/>,document.getElementById("app"))
+  </script>
+</body>
+</html>
