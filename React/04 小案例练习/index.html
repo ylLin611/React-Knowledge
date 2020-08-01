@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <!-- 引入react的三个依赖 -->
+  <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+  <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+  <!-- 解析jsx => ReactElement -->
+  <script type="text/babel">
+    class App extends React.Component{
+      constructor(){
+        super()
+        this.state = {
+          books: [
+            {
+              id: 1,
+              name: '《JavaScript1》',
+              price: 100,
+              time: '2020-06-11',
+              count: 1
+            },
+            {
+              id: 2,
+              name: '《JavaScript2》',
+              price: 200,
+              time: '2020-06-11',
+              count: 1
+            },
+            {
+              id: 3,
+              name: '《JavaScript3》',
+              price: 300,
+              time: '2020-06-11',
+              count: 1
+            },
+            {
+              id: 4,
+              name: '《JavaScript4》',
+              price: 400,
+              time: '2020-06-11',
+              count: 1
+            }
+          ]
+        }
+      }
+
+      // 有数据时展示
+      renderBooks(){
+        return (
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>名称</th>
+                  <th>上架时间</th>
+                  <th>价格</th>
+                  <th>数量</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.books.map( (item,index) => {
+                  return (
+                    <tr>
+                      <td>{index+1}</td>
+                      <td>{item.name}</td>
+                      <td>{item.time}</td>
+                      <td>{item.price}</td>
+                      <td>
+                        <button disabled = { item.count <= 1 } onClick = { e => this.changeCount(index,-1) }>-</button>
+                        {item.count}
+                        <button onClick = { e => this.changeCount(index,1) }>+</button>
+                      </td>
+                      <td><button onClick = { e => { this.btnClick(item.id) }}>移除</button></td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        )
+      }
+      // 没数据时展示
+      renderNulBooks(){
+        return <h2>空空如也~</h2>
+      }
+      render(){
+        return this.state.books.length ? this.renderBooks():this.renderNulBooks()
+      }
+      //修改数量 
+      changeCount(index,num){
+        const newBooks = [...this.state.books]
+        newBooks[index].count += num
+        
+        this.setState({
+          books: newBooks
+        })
+      }
+      //移除项
+      btnClick(id) {
+        //console.log(id);
+        
+        this.setState({
+          books: this.state.books.filter((item)=>{
+            return item.id != id
+          })
+        })
+      }
+    }
+    // 挂载
+    ReactDOM.render(<App/>,document.getElementById("app"))
+  </script>
+</body>
+</html>
